@@ -17,40 +17,57 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-
-        // Referenciar los botones de la interfaz
+        // Referenciar los elementos de la interfaz
         val btnAumentar = findViewById<Button>(R.id.btnAumentar)
         val btnDisminuir = findViewById<Button>(R.id.btnDisminuir)
         val btnReiniciar = findViewById<Button>(R.id.btnReiniciar)
-
         val tvContador = findViewById<TextView>(R.id.tvContador)
+        val tvAdvertencia = findViewById<TextView>(R.id.tvAdvertencia)
 
-        // Aumentar el contador con el boton
+        // Inicializar textos por defecto
+        tvContador.text = contador.toString()
+        tvAdvertencia.text = ""
+
+        // Aumentar contador con el boton
         btnAumentar.setOnClickListener {
-            // Aumentar valor del atributo contador
-            contador++
-            // Asignar el valor del contador en el texto
-            tvContador.text = contador.toString()
+            tvAdvertencia.text = "" // Limpiar advertencia previa
+            if (contador < 10) {
+                // Aumentar el valor del contador del atributo contador
+                contador++
+                // Asignar el valor del contador en el texto
+                tvContador.text = contador.toString()
+            }
+
+            // Si llega al límite máximo
+            if (contador == 10) {
+                tvAdvertencia.text = "Número máximo alcanzado"
+            }
         }
 
-        // Disminuir el contador con el boton
+        // Disminuir contador con el boton
         btnDisminuir.setOnClickListener {
-            // Disminuir valor del atributo contador
-            contador--
-            // Asignar el valor del contador en el texto
-            tvContador.text = contador.toString()
+            tvAdvertencia.text = "" // Limpiar advertencia previa
+            if (contador > 0) {
+                // Disminuir el valor del atributo contador
+                contador--
+                // Asignar el valor del contador en el texto
+                tvContador.text = contador.toString()
+            }
+
+            // Si llega al límite mínimo
+            if (contador == 0) {
+                tvAdvertencia.text = "No se permiten números negativos"
+            }
         }
 
-        // Reiniciar el contador con el boton
+        // Reiniciar contador con el boton
         btnReiniciar.setOnClickListener {
             // Restablecer el valor del atributo contador a 0
             contador = 0
             // Asignar el valor del contador en el texto
             tvContador.text = contador.toString()
+            tvAdvertencia.text = ""
         }
-
-
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
